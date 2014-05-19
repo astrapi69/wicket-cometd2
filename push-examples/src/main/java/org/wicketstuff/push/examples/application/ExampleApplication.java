@@ -9,6 +9,7 @@ import org.wicketstuff.push.IChannelService;
 import org.wicketstuff.push.IPushService;
 import org.wicketstuff.push.cometd.CometdService;
 import org.wicketstuff.push.examples.pages.Index;
+import org.wicketstuff.push.examples.pages.WicketTimerChat;
 import org.wicketstuff.push.timer.TimerChannelService;
 import org.wicketstuff.push.timer.TimerPushService;
 
@@ -29,6 +30,15 @@ public class ExampleApplication extends WebApplication implements Serializable {
 		cometdService = new CometdService(this);
 		timerChannelService = new TimerChannelService(Duration.seconds(2));
 		timerPushService = new TimerPushService(Duration.seconds(2));
+	}
+	
+	@Override
+	protected void init()
+	{
+		super.init();
+		this.getMarkupSettings().setStripWicketTags(true); //IMPORTANT!
+		mountPage("/" + WicketTimerChat.class.getSimpleName(), WicketTimerChat.class);
+
 	}
 
 	/**

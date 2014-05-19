@@ -28,10 +28,12 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
+import org.apache.wicket.ThreadContext;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+//import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.util.time.Time;
 import org.wicketstuff.push.IChannelService;
@@ -83,14 +85,14 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 	static {
 		try {
 			methods = new Method[] {
-					AjaxRequestTarget.class.getMethod("addComponent",
-							new Class[] { Component.class }),
-					AjaxRequestTarget.class.getMethod("addComponent",
+					AjaxRequestTarget.class.getMethod("add",
+							new Class[] { Component[].class }),
+					AjaxRequestTarget.class.getMethod("add",
 							new Class[] { Component.class, String.class }),
-					AjaxRequestTarget.class.getMethod("appendJavascript",
-							new Class[] { String.class }),
-					AjaxRequestTarget.class.getMethod("prependJavascript",
-							new Class[] { String.class }),
+					AjaxRequestTarget.class.getMethod("appendJavaScript",
+							new Class[] { CharSequence.class }),
+					AjaxRequestTarget.class.getMethod("prependJavaScript",
+							new Class[] { CharSequence.class }),
 					AjaxRequestTarget.class.getMethod("focusComponent",
 							new Class[] { Component.class }), };
 		} catch (final Exception e) {
@@ -159,10 +161,10 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 					IllegalAccessException, InvocationTargetException {
 				final Application originalApplication = Application.get();
 				try {
-					Application.set(_application);
+					ThreadContext.setApplication(_application);					
 					methods[m].invoke(o, parameters);
 				} finally {
-					Application.set(originalApplication);
+					ThreadContext.setApplication(originalApplication);
 				}
 			}
 		}
@@ -431,8 +433,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		return new TimerPushTarget(Application.get(), id, timeout);
 	}
 
-	@Override
-	public void renderHead(final IHeaderResponse response) {
+	public void renderHead(Component component, IHeaderResponse response) {
 		touch(getComponent().getApplication(), id);
 		final String timerChannelPageId = getComponent().getPage().getId()
 				+ ":updateInterval:" + getUpdateInterval();
@@ -441,7 +442,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 			return;
 		}
 		if (!response.wasRendered(timerChannelPageId)) {
-			super.renderHead(response);
+			super.renderHead(component, response);
 			setRedirectId(getComponent().getApplication(), timerChannelPageId,
 					id);
 			response.markRendered(timerChannelPageId);

@@ -1,12 +1,12 @@
 package org.wicketstuff.push.examples.pages.push;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.push.IPushService;
 import org.wicketstuff.push.IPushTarget;
 import org.wicketstuff.push.examples.pages.ExamplePage;
@@ -74,7 +74,7 @@ public abstract class WicketAbstractPushChat extends ExamplePage {
 				CHAT_ROOM.send((Message)form.getModelObject());
 
 				//clear message area add focus it
-				target.appendJavascript("document.getElementById('" + mess.getMarkupId() + "').value =''");
+				target.appendJavaScript("document.getElementById('" + mess.getMarkupId() + "').value =''");
 				target.focusComponent(mess);
 			}
 		});

@@ -7,6 +7,7 @@ import java.util.WeakHashMap;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
+import org.apache.wicket.ThreadContext;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.cometd.bayeux.Channel;
 import org.cometd.bayeux.server.BayeuxServer;
@@ -42,7 +43,6 @@ public class CometdService implements IChannelService {
 
 	private final class RemovalForwardingListener implements ServerChannel.SubscriptionListener {
 
-		@Override
 		public void subscribed(ServerSession session, ServerChannel channel) {
 			final String channelId = channel.getId();
 			if (removalListeners.containsKey(channelId)) {
@@ -51,7 +51,6 @@ public class CometdService implements IChannelService {
 			
 		}
 
-		@Override
 		public void unsubscribed(ServerSession session, ServerChannel channel) {
 			final String channelId = channel.getId();
 			if (removalListeners.containsKey(channelId)) {
@@ -74,20 +73,22 @@ public class CometdService implements IChannelService {
 			final boolean hasNoApp = !Application.exists();
 			final boolean hasNoSession = !Session.exists();
 			if (hasNoApp) {
-				Application.set(getApplication());
+				ThreadContext.setApplication(getApplication());
+//				Application.set(getApplication());
 			}
 			if (hasNoSession && sess != null) {
-				Session.set(sess);
+				ThreadContext.setSession(sess);
+//				Session.set(sess);
 			}
 
 			removeListener.removed(session, timeout);
 
-			if (hasNoApp) {
-				Application.unset();
-			}
-			if (hasNoSession) {
-				Session.unset();
-			}
+//			if (hasNoApp) {
+//				Application.configure();
+//			}
+//			if (hasNoSession) {
+//				Session.unset();
+//			}
 		}
 	}
 

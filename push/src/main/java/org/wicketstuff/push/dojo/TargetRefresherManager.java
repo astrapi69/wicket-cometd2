@@ -19,9 +19,11 @@ import java.util.Map;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.AjaxRequestTarget.IJavascriptResponse;
+import org.apache.wicket.ajax.AjaxRequestTarget.IJavaScriptResponse;
+//import org.apache.wicket.ajax.AjaxRequestTarget.IJavascriptResponse;
 import org.apache.wicket.ajax.AjaxRequestTarget.IListener;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
+//import org.apache.wicket.behavior.IBehavior;
 
 /**
  * A Manager to deal with {@link AjaxRequestTarget} and makeWidget in dojo. Only
@@ -46,13 +48,13 @@ public class TargetRefresherManager implements IListener {
 	}
 
 	public void onAfterRespond(final Map<String, Component> map,
-			final IJavascriptResponse response) {
+			final IJavaScriptResponse response) {
 		// we need to find all dojoWidget that should be reParsed
 		final Map<String, Component> real = new HashMap<String, Component>();
 		String requires = "";
 
 		for (final Component c : dojoComponents.values()) {
-			for (final IBehavior behavior : c.getBehaviors()) {
+			for (final Behavior behavior : c.getBehaviors()) {
 				if (behavior instanceof AbstractRequireDojoBehavior) {
 					requires += ((AbstractRequireDojoBehavior) behavior)
 							.getRequire();
@@ -62,7 +64,7 @@ public class TargetRefresherManager implements IListener {
 		dojoComponents = real;
 
 		if (generateReParseJs() != null) {
-			response.addJavascript(requires + generateReParseJs());
+			response.addJavaScript(requires + generateReParseJs());
 		}
 		instance = null;
 

@@ -14,14 +14,15 @@
 package org.wicketstuff.push.dojo;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.util.template.PackagedTextTemplate;
+//import org.apache.wicket.util.template.PackagedTextTemplate;
+import org.apache.wicket.util.template.PackageTextTemplate;
 
 /**
  * Used to externalized js in templates
  * 
  * @author Vincent Demay
  */
-public class DojoPackagedTextTemplate extends PackagedTextTemplate {
+public class DojoPackagedTextTemplate extends PackageTextTemplate {
 	private static final long serialVersionUID = 1L;
 
 	private final String fileName;

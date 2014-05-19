@@ -17,9 +17,17 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.apache.wicket.RequestCycle;
+
+
+
+
+import org.apache.wicket.Component;
+//import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+//import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 /**
  * <p>
@@ -56,11 +64,12 @@ public abstract class AbstractRequireDojoBehavior extends
 	 * the same place on the rendered page??????
 	 */
 	@Override
-	public void renderHead(final IHeaderResponse response) {
-		super.renderHead(response);
-
-		response.renderJavascript(getRequire(),
-				AbstractRequireDojoBehavior.class.getName());
+	public void renderHead(Component component, IHeaderResponse response) {
+		super.renderHead(component, response);
+		response.render(JavaScriptHeaderItem.forScript(getRequire(),
+				AbstractRequireDojoBehavior.class.getName()));
+//		response.renderJavascript(getRequire(),
+//				AbstractRequireDojoBehavior.class.getName());
 	}
 
 	/**
@@ -102,9 +111,8 @@ public abstract class AbstractRequireDojoBehavior extends
 
 		// if a Dojo Widget is rerender needs to run some javascript to refresh
 		// it. TargetRefresherManager contains top level dojo widgets
-		if (RequestCycle.get().getRequestTarget() instanceof AjaxRequestTarget) {
-			final AjaxRequestTarget target = (AjaxRequestTarget) RequestCycle
-					.get().getRequestTarget();
+		AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
+		if (target != null) {
 			// and register listener
 			target.addListener(TargetRefresherManager.getInstance());
 			TargetRefresherManager.getInstance().addComponent(getComponent());

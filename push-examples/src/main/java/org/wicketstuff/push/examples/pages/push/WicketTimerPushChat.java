@@ -1,6 +1,6 @@
 package org.wicketstuff.push.examples.pages.push;
 
-import org.apache.wicket.PageParameters;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.push.IPushService;
 
 public class WicketTimerPushChat extends WicketAbstractPushChat {

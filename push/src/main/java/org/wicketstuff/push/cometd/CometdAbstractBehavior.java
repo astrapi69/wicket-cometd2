@@ -7,13 +7,16 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.markup.html.IHeaderResponse;
+//import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.parser.XmlPullParser;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.cometd.server.CometdServlet;
 import org.wicketstuff.push.dojo.AbstractRequireDojoBehavior;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 
 /**
  * This behavior will be asked by client side when it will receive a cometd
@@ -53,20 +56,26 @@ public abstract class CometdAbstractBehavior extends
 	}
 
 	@Override
-	public void renderHead(final IHeaderResponse response) {
-		super.renderHead(response);
+	public void renderHead(Component component, IHeaderResponse response) {
+		super.renderHead(component, response);
 		if (channelId == null) {
 			throw new IllegalArgumentException(
 					"ChannelId in a CometdBehavior can not be null");
 		}
-		response.renderJavascript(getInitCometdScript(), "initCometd");
+		response.render(JavaScriptHeaderItem.forScript(getInitCometdScript(), "initCometd"));
+//		response.renderJavaScript(getInitCometdScript(), "initCometd");
 		final String cometdInterceptorScript = getCometdInterceptorScript();
 		if (cometdInterceptorScript != null) {
-			response.renderJavascript(cometdInterceptorScript, "Interceptor"
-					+ getBehaviorMarkupId());
+			response.render(JavaScriptHeaderItem.forScript(cometdInterceptorScript, "Interceptor"
+					+ getBehaviorMarkupId()));
+//			response.renderJavascript(cometdInterceptorScript, "Interceptor"
+//					+ getBehaviorMarkupId());
 		}
-		response.renderJavascript(getSubscriberScript(), "Subscribe"
-				+ getBehaviorMarkupId());
+
+		response.render(JavaScriptHeaderItem.forScript(getSubscriberScript(), "Subscribe"
+				+ getBehaviorMarkupId()));
+//		response.renderJavascript(getSubscriberScript(), "Subscribe"
+//				+ getBehaviorMarkupId());
 	}
 
 	/**

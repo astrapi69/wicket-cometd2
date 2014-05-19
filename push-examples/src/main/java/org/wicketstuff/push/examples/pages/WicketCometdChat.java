@@ -1,6 +1,6 @@
 package org.wicketstuff.push.examples.pages;
 
-import org.apache.wicket.PageParameters;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.cometd.bayeux.server.ServerSession;
 import org.cometd.bayeux.server.ServerSession.RemoveListener;
 import org.wicketstuff.push.ChannelEvent;

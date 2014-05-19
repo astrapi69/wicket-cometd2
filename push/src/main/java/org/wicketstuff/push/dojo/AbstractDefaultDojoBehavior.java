@@ -14,12 +14,19 @@
 package org.wicketstuff.push.dojo;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.RuntimeConfigurationType;
+//import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnLoadHeaderItem;
+import org.apache.wicket.request.resource.PackageResourceReference;
+//import org.apache.wicket.markup.html.IHeaderResponse;
+//import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * Handles event requests using Dojo.
@@ -63,12 +70,12 @@ public abstract class AbstractDefaultDojoBehavior extends
 	 * a Unique key to know if a CompressedResourceReference is set by the user
 	 * in order to use a custom dojo distribution
 	 */
-	public static final MetaDataKey<CompressedResourceReference> USE_CUSTOM_DOJO_DIST = new MetaDataKey<CompressedResourceReference>() {
+	public static final MetaDataKey<ResourceReference> USE_CUSTOM_DOJO_DIST = new MetaDataKey<ResourceReference>() {
 		private static final long serialVersionUID = 1L;
 	};
 
 	/** reference to the dojo support javascript file. */
-	public static final ResourceReference DOJO = new CompressedResourceReference(
+	public static final ResourceReference DOJO = new PackageResourceReference(
 			AbstractDefaultDojoBehavior.class, "dojo/dojo.js");
 
 	/** A unique ID for the JavaScript Dojo config script */
@@ -79,17 +86,16 @@ public abstract class AbstractDefaultDojoBehavior extends
 	 * @see wicket.ajax.AbstractDefaultAjaxBehavior#renderHead(wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
-	public void renderHead(final IHeaderResponse response) {
-		super.renderHead(response);
+	public void renderHead(Component component, IHeaderResponse response) {
+		super.renderHead(component, response);
 
 		// Dojo configuration
 		final StringBuffer dojoConfig = new StringBuffer();
 		dojoConfig.append("var djConfig = {};\n");
 
 		// enable dojo debug if our configuration type is DEVELOPMENT
-		final String configurationType = Application.get()
-				.getConfigurationType();
-		if (configurationType.equalsIgnoreCase(Application.DEVELOPMENT)) {
+		final RuntimeConfigurationType configurationType = Application.get().getConfigurationType();
+		if ( configurationType.equals(RuntimeConfigurationType.DEVELOPMENT)) {
 			dojoConfig.append("djConfig.isDebug = true;\n");
 			dojoConfig.append("djConfig.parseOnLoad = true;\n");
 		} else {
@@ -97,9 +103,10 @@ public abstract class AbstractDefaultDojoBehavior extends
 		}
 
 		// render dojo config
-		response.renderJavascript(dojoConfig.toString(), COMETD_DOJO_CONFIG_ID);
+		response.render(JavaScriptHeaderItem
+				.forScript(dojoConfig.toString(), COMETD_DOJO_CONFIG_ID));
 
-		response.renderJavascriptReference(getDojoResourceReference());
+		response.render(JavaScriptHeaderItem.forReference(getDojoResourceReference()));
 	}
 
 	/**
@@ -109,7 +116,7 @@ public abstract class AbstractDefaultDojoBehavior extends
 	 */
 	public ResourceReference getDojoResourceReference() {
 		if (Application.get().getMetaData(USE_CUSTOM_DOJO_DIST) == null
-				|| !(Application.get().getMetaData(USE_CUSTOM_DOJO_DIST) instanceof CompressedResourceReference)) {
+				|| !(Application.get().getMetaData(USE_CUSTOM_DOJO_DIST) instanceof PackageResourceReference)) {
 			return DOJO;
 		} else {
 			return Application.get().getMetaData(USE_CUSTOM_DOJO_DIST);

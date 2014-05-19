@@ -10,7 +10,7 @@
   <groupId>org.wicketstuff</groupId>
   <artifactId>push-parent</artifactId>
   <packaging>pom</packaging>
-  <version>1.4.11-SNAPSHOT</version>
+  <version>6.15.0</version>
   
   <name>Push - Parent</name>
   <description>See the child project "push"for more information</description>
