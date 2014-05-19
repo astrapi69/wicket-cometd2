@@ -11,6 +11,7 @@ import org.apache.wicket.ThreadContext;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.cometd.bayeux.Channel;
 import org.cometd.bayeux.server.BayeuxServer;
+import org.cometd.bayeux.server.ConfigurableServerChannel;
 import org.cometd.bayeux.server.ServerChannel;
 import org.cometd.bayeux.server.ServerSession;
 import org.cometd.bayeux.server.ServerSession.RemoveListener;
@@ -155,7 +156,7 @@ public class CometdService implements IChannelService {
 		 */
 		event.addData("proxy", "true");
 		final String channelId = "/" + event.getChannel();
-		ServerChannel channel = getBayeux().getChannel(channelId);
+		ServerChannel channel = getChannel(channelId);
 		channel.publish(null, event.getData(), event.getId());
 	}
 
@@ -165,6 +166,21 @@ public class CometdService implements IChannelService {
 		}
 
 		return _bayeux;
+	}
+	
+	private ServerChannel getChannel(String channelId) {
+		ServerChannel channel = getBayeux().getChannel(channelId);
+		if(channel == null) {
+			getBayeux().createIfAbsent(channelId, new ConfigurableServerChannel.Initializer()
+	        {
+	            public void configureChannel(ConfigurableServerChannel channel)
+	            {
+	                channel.setPersistent(true);
+	                channel.setLazy(true);
+	            }
+	        });
+		}
+		return getBayeux().getChannel(channelId);
 	}
 
 	/**
