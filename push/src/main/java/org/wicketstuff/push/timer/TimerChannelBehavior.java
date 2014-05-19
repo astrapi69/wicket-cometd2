@@ -301,9 +301,9 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		}
 
 		/**
-		 * @see IAjaxPushBehavior#appendJavascript(String)
+		 * @see IAjaxPushBehavior#appendJavaScript(String)
 		 */
-		public void appendJavascript(final String javascript) {
+		public void appendJavaScript(final String javascript) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(APPEND_JAVASCRIPT_METHOD,
 						new Object[] { javascript });
@@ -321,9 +321,9 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		}
 
 		/**
-		 * @see IAjaxPushBehavior#prependJavascript(String)
+		 * @see IAjaxPushBehavior#prependJavaScript(String)
 		 */
-		public void prependJavascript(final String javascript) {
+		public void prependJavaScript(final String javascript) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(PREPEND_JAVASCRIPT_METHOD,
 						new Object[] { javascript });

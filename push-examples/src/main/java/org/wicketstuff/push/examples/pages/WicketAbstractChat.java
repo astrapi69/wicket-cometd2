@@ -49,7 +49,7 @@ public abstract class WicketAbstractChat extends ExamplePage {
 		getChannelService().addChannelListener(this, "chat",
 				new IChannelListener() {
 					public void onEvent(final String channel, final Map<String, String> datas, final IChannelTarget target) {
-						target.appendJavascript("document.getElementById('"	+ chat.getMarkupId() + "').innerHTML += '<br/>" + datas.get("message") + "'");
+						target.appendJavaScript("document.getElementById('"	+ chat.getMarkupId() + "').innerHTML += '<br/>" + datas.get("message") + "'");
 					}
 				});
 		formChat.add(chat);

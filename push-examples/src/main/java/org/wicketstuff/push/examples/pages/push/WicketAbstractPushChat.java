@@ -55,7 +55,7 @@ public abstract class WicketAbstractPushChat extends ExamplePage {
 		CHAT_ROOM.addListener(new ChatListener() {
 			public void onMessage(final Message msg) {
 				if (pushTarget.isConnected()) {
-					pushTarget.appendJavascript("document.getElementById('" + chat.getMarkupId() + "').innerHTML += '" + msg + "<br/>'");
+					pushTarget.appendJavaScript("document.getElementById('" + chat.getMarkupId() + "').innerHTML += '" + msg + "<br/>'");
 					pushTarget.trigger();
 				} else {
 					CHAT_ROOM.removeListener(this);
