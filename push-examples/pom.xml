@@ -1,76 +1,95 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.wicketstuff</groupId>
-    <artifactId>push-parent</artifactId>
-    <version>6.15.0</version>
-  </parent>
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>push-parent</artifactId>
+		<version>6.15.0</version>
+	</parent>
 
-  <artifactId>push-examples</artifactId>
-  <packaging>war</packaging>
-  <version>6.15.0</version>
+	<artifactId>push-examples</artifactId>
+	<packaging>war</packaging>
+	<version>6.15.0</version>
 
-  <name>Wicket Contrib Cometd Examples</name>
-  <description>An integration project for the Ajax JavaScript library
+	<name>Wicket Contrib Cometd Examples</name>
+	<description>An integration project for the Ajax JavaScript library
     Dojo. This project provides the basic AjaxHandler for DOJO processing
     at the serverside, and Dojo/Wicket components.</description>
-  <url>http://wicket-stuff.sourceforge.net/wicket-contrib-dojo</url>
+	<url>http://wicket-stuff.sourceforge.net/wicket-contrib-dojo</url>
 
-  <dependencies>
+	<dependencies>
 
-	<dependency>
-		<groupId>org.eclipse.jetty</groupId>
-		<artifactId>jetty-util</artifactId>
-		<version>${jetty.version}</version>
-		<scope>test</scope>
-	</dependency>
-	
-	<dependency>
-		<groupId>org.eclipse.jetty</groupId>
-		<artifactId>jetty-server</artifactId>
-		<version>${jetty.version}</version>
-		<scope>test</scope>
-	</dependency>
+		<!-- JETTY DEPENDENCIES FOR TESTING -->
 
-	<dependency>
-		<groupId>org.eclipse.jetty</groupId>
-		<artifactId>jetty-webapp</artifactId>
-		<version>${jetty.version}</version>
-		<scope>test</scope>
-	</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-util</artifactId>
+			<version>${jetty.version}</version>
+			<scope>test</scope>
+		</dependency>
 
-	<dependency>
-		<groupId>org.eclipse.jetty</groupId>
-		<artifactId>jetty-servlet</artifactId>
-		<version>${jetty.version}</version>
-		<scope>test</scope>
-	</dependency>
-	
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>0.9.20</version>
-    </dependency>
-    <dependency>
-      <groupId>org.wicketstuff</groupId>
-      <artifactId>push</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-  </dependencies>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jetty.version}</version>
+			<scope>test</scope>
+		</dependency>
 
-  <build>
-    <resources>
-      <resource>
-        <filtering>false</filtering>
-        <directory>src/main/java</directory>
-        <includes>
-          <include>**</include>
-        </includes>
-        <excludes>
-          <exclude>**/*.java</exclude>
-        </excludes>
-      </resource>
-    </resources>
-  </build>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jetty.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>${jetty.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+
+
+		<!-- LOGGING DEPENDENCIES -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- LOGGING DEPENDENCIES - LOG4J -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>push</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+	</build>
 </project>
