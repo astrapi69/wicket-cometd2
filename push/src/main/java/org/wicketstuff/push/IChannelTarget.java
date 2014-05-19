@@ -72,7 +72,7 @@ public interface IChannelTarget
 	 * 
 	 * @param javascript
 	 */
-	public void appendJavascript(String javascript);
+	public void appendJavaScript(String javascript);
 	
 	/**
 	 * Adds javascript that will be evaluated on the client side before
@@ -80,5 +80,5 @@ public interface IChannelTarget
 	 * 
 	 * @param javascript
 	 */
-	public void prependJavascript(String javascript);
+	public void prependJavaScript(String javascript);
 }

@@ -27,7 +27,7 @@ public class CometdTarget implements IChannelTarget {
 		target.add(component, markupId);
 	}
 
-	public void appendJavascript(final String javascript) {
+	public void appendJavaScript(final String javascript) {
 		target.appendJavaScript(javascript);
 	}
 
@@ -35,7 +35,7 @@ public class CometdTarget implements IChannelTarget {
 		target.focusComponent(component);
 	}
 
-	public void prependJavascript(final String javascript) {
+	public void prependJavaScript(final String javascript) {
 		target.prependJavaScript(javascript);
 	}
 }
