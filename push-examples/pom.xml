@@ -10,7 +10,6 @@
 
 	<artifactId>push-examples</artifactId>
 	<packaging>war</packaging>
-	<version>6.15.0</version>
 
 	<name>Wicket Contrib Cometd Examples</name>
 	<description>An integration project for the Ajax JavaScript library
@@ -21,7 +20,6 @@
 	<dependencies>
 
 		<!-- JETTY DEPENDENCIES FOR TESTING -->
-
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-util</artifactId>
